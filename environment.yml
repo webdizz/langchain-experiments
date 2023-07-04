@@ -1,0 +1,28 @@
+name: langchain
+channels:
+  - https://conda.anaconda.org/menpo
+  - conda-forge
+dependencies:
+  - python=3.*
+  - numpy
+  - pandas
+  # JupyterLab
+  - jupyterlab
+  - black
+  # Langchain
+  - langchain
+  - openai
+  # Misc
+  - pip:
+      # JupyterLab extensions
+      - lckr-jupyterlab-variableinspector
+      - aquirdturtle_collapsible_headings
+      - jupyterlab_sql
+      - jupyterlab_markup
+      - jupyterlab-code-formatter
+      # for VS code
+      - pylint
+      - autopep8
+      # misc
+      - pandas_summary
+      - python-dotenv-vault
