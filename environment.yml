@@ -26,3 +26,5 @@ dependencies:
       # misc
       - pandas_summary
       - python-dotenv-vault
+      # LLM
+      - tiktoken
