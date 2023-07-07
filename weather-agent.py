@@ -7,6 +7,7 @@ from langchain.llms.openai import OpenAI
 from langchain.agents import initialize_agent, Tool
 from langchain.agents import AgentType
 import requests
+import langchain
 
 
 def get_ip():
@@ -18,7 +19,6 @@ def get_ip():
         print(f"Failed to get client IP: {e}")
         raise
     return client_ip
-
 
 def get_city(text: str) -> str:
     """Returns information about city using current IP address.
@@ -35,14 +35,13 @@ def get_city(text: str) -> str:
         raise
     return city
 
-
 llm = OpenAI(temperature=0)
 search = GoogleSerperAPIWrapper()
 tools = [
     Tool(
         name="Intermediate Answer",
         func=search.run,
-        description="useful for when you need to ask with search",
+        description="useful for when you need to ask with search. If temperature is in Fahrenheit, please convert it to Celsius and provide the final answer.",
     ),
     Tool(
         name="City Finder",
@@ -52,7 +51,12 @@ tools = [
 ]
 
 self_ask_with_search = initialize_agent(
-    tools, llm, agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION, verbose=True,
+    tools,
+    llm,
+    agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True,
+    max_iterations=3,
 )
 
+# langchain.debug = True
 self_ask_with_search.run("What is a weather today?")
